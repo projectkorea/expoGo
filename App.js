@@ -1,6 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import { Animated, View, StyleSheet, TouchableOpacity, Text } from 'react-native'
 import { useRef } from 'react'
+import PlaceholderImage from './assets/images/background-image.png'
+import ImageViewer from './components/ImageViewer'
+import Button from './components/Button'
 
 export default function App() {
   const positionAnim = useRef(new Animated.Value(0)).current
@@ -21,6 +24,11 @@ export default function App() {
     <View style={styles.container}>
       <StatusBar style="light" />
       <Text style={styles.text}>Open up App.js to start working on your app!</Text>
+      <ImageViewer placeholderImageSource={PlaceholderImage} />
+      <View style={styles.footerContainer}>
+        <Button theme="primary" label="Choose a photo" />
+        <Button label="Use this photo" />
+      </View>
       <TouchableOpacity onPress={startAnimation}>
         <Text style={styles.buttonText}>Start Animation</Text>
       </TouchableOpacity>
@@ -49,5 +57,18 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     textDecorationLine: 'underline',
+  },
+  imageContainer: {
+    flex: 1,
+    paddingTop: 58,
+  },
+  image: {
+    width: 320,
+    height: 440,
+    borderRadius: 18,
+  },
+  footerContainer: {
+    flex: 1 / 3,
+    alignItems: 'center',
   },
 })
