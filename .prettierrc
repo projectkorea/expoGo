@@ -3,6 +3,8 @@
     {
       "files": "./**/*.js",
       "options": {
+        "array-bracket-spacing": ["always"],
+        "object-curly-spacing": ["always"],
         "printWidth": 180,
         "tabWidth": 2,
         "singleQuote": true,

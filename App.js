@@ -1,11 +1,25 @@
 import { StatusBar } from 'expo-status-bar';
 import { Animated, View, StyleSheet, TouchableOpacity, Text } from 'react-native'
-import { useRef } from 'react'
+import { useState, useRef } from 'react'
 import PlaceholderImage from './assets/images/background-image.png'
 import ImageViewer from './components/ImageViewer'
 import Button from './components/Button'
+import * as ImagePicker from 'expo-image-picker'
 
 export default function App() {
+  const [selectedImage, setSelectedImage] = useState(null)
+  const pickImageAsync = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      quality: 1,
+    })
+
+    if (!result.canceled) {
+      setSelectedImage(result.assets[0].uri)
+    } else {
+      alert('You did not select any image.')
+    }
+  }
   const positionAnim = useRef(new Animated.Value(0)).current
   const startAnimation = () => {
     Animated.timing(positionAnim, {
@@ -24,9 +38,9 @@ export default function App() {
     <View style={styles.container}>
       <StatusBar style="light" />
       <Text style={styles.text}>Open up App.js to start working on your app!</Text>
-      <ImageViewer placeholderImageSource={PlaceholderImage} />
+      <ImageViewer placeholderImageSource={PlaceholderImage} selectedImage={selectedImage} />
       <View style={styles.footerContainer}>
-        <Button theme="primary" label="Choose a photo" />
+        <Button theme="primary" label="Choose a photo" onPress={pickImageAsync} />
         <Button label="Use this photo" />
       </View>
       <TouchableOpacity onPress={startAnimation}>
